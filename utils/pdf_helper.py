@@ -12,7 +12,15 @@ class PDFHelper:
         """初始化 Marker 模型"""
         try:
             if cls._models is None:
-                pdf_logger.info("Initializing Marker models...")
+                # 设置离线模式
+                os.environ['TRANSFORMERS_OFFLINE'] = '1'
+                
+                # 设置模型缓存目录
+                cache_dir = os.getenv('HF_HOME', '/root/.cache/huggingface')
+                os.environ['TRANSFORMERS_CACHE'] = cache_dir
+                
+                pdf_logger.info(f"Using model cache directory: {cache_dir}")
+                pdf_logger.info("Initializing Marker models in offline mode...")
                 cls._models = load_all_models()
                 pdf_logger.info("Models loaded successfully")
                 
