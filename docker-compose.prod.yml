@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    expose:
+      - "${PORT}"
+    env_file:
+      - .env.prod
+    depends_on:
+      - minio
+    command: uvicorn app:app --host ${HOST} --port ${PORT} --workers ${WORKERS}
+    volumes:
+      - ./logs:/app/logs
+
+  minio:
+    image: minio/minio
+    expose:
+      - "9000"
+      - "9001"
+    volumes:
+      - minio_data:/data
+    env_file:
+      - .env.prod
+    command: server /data --console-address ":9001"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ${SSL_CERT_PATH}:/etc/nginx/ssl/cert.pem:ro
+      - ${SSL_KEY_PATH}:/etc/nginx/ssl/key.pem:ro
+    depends_on:
+      - web
+
+volumes:
+  minio_data: 

@@ -1,0 +1,6 @@
+fastapi
+python-multipart
+uvicorn
+marker-pdf
+minio
+pdf2image

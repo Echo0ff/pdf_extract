@@ -1,0 +1,47 @@
+# 环境文件
+.env.prod
+.env.dev
+
+# SSL证书
+*.pem
+*.key
+*.crt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Models
+models/
