@@ -16,7 +16,7 @@ class PDFHelper:
                 os.environ['TRANSFORMERS_OFFLINE'] = '1'
                 
                 # 设置模型缓存目录
-                cache_dir = os.getenv('HF_HOME', '/root/.cache/huggingface')
+                cache_dir = os.getenv('HF_HOME', '/root/.cache/huggingface/hub/')
                 os.environ['TRANSFORMERS_CACHE'] = cache_dir
                 
                 pdf_logger.info(f"Using model cache directory: {cache_dir}")
