@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     MINIO_BUCKET: str
     MINIO_SECURE: bool = False
     
+    # 添加 Hugging Face 相关配置
+    HF_HOME: Optional[str] = '/root/.cache/huggingface'
+    TRANSFORMERS_CACHE: Optional[str] = '/root/.cache/huggingface/hub'
+    TRANSFORMERS_OFFLINE: Optional[str] = '1'
+    HF_DATASETS_OFFLINE: Optional[str] = '1'
+    
     # SSL配置
     SSL_CERT_PATH: Optional[str] = None
     SSL_KEY_PATH: Optional[str] = None
