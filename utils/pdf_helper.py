@@ -13,11 +13,12 @@ class PDFHelper:
         try:
             if cls._models is None:
                 # 设置离线模式
-                os.environ['TRANSFORMERS_OFFLINE'] = '1'
+                os.environ['TRANSFORMERS_OFFLINE'] = '0'
                 
                 # 设置模型缓存目录
                 cache_dir = os.getenv('HF_HOME', '/root/.cache/huggingface/hub/')
                 os.environ['TRANSFORMERS_CACHE'] = cache_dir
+                os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
                 
                 pdf_logger.info(f"Using model cache directory: {cache_dir}")
                 pdf_logger.info("Initializing Marker models in offline mode...")
