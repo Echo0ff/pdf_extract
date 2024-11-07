@@ -70,6 +70,9 @@ RUN pip3 install torch torchvision torchaudio --index-url https://download.pytor
 # 设置环境变量
 ENV PYTHONUNBUFFERED=1
 
+# 预创建模型缓存目录
+RUN mkdir -p /root/.cache/huggingface/hub
+
 # 暴露端口
 EXPOSE 5000
 
