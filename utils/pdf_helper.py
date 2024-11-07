@@ -18,7 +18,6 @@ class PDFHelper:
                 # 设置模型缓存目录
                 cache_dir = os.getenv('HF_HOME', '/root/.cache/huggingface/hub/')
                 os.environ['TRANSFORMERS_CACHE'] = cache_dir
-                os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
                 
                 pdf_logger.info(f"Using model cache directory: {cache_dir}")
                 pdf_logger.info("Initializing Marker models in offline mode...")
