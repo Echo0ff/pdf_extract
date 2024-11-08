@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from minio import Minio
 import os
 import uuid
@@ -21,6 +22,15 @@ def get_settings():
 
 settings = get_settings()
 app = FastAPI(title=settings.PROJECT_NAME)
+
+# 添加 CORS 中间件配置
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许所有源
+    allow_credentials=True,  # 允许携带凭证
+    allow_methods=["*"],  # 允许所有方法
+    allow_headers=["*"],  # 允许所有请求头
+)
 
 # MinIO配置
 minio_client = Minio(
