@@ -30,8 +30,8 @@ COPY requirements.txt .
 
 # Upgrade pip and install dependencies
 RUN python -m pip install --upgrade pip \
+    && pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118 \
     && pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --progress-bar off -r requirements.txt \
-    && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # Copy project files
 COPY . .
