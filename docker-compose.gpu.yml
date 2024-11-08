@@ -1,0 +1,48 @@
+version: '3.8'  # Updated to a more recent version
+
+services:
+  web:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+      - ./models:/root/.cache/huggingface/hub
+    env_file:
+      - .env.dev
+    depends_on:
+      - minio
+    command: uvicorn app:app --host ${HOST} --port ${PORT} --reload
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 4  # Use 4 GPUs
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=4,5,6,7  # Use the last 4 GPUs
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    env_file:
+      - .env.dev
+    command: server /data --console-address ":9001"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8091:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+
+volumes:
+  minio_data:
