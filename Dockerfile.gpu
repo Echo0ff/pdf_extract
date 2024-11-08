@@ -26,12 +26,11 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /root/.cache/huggingface/hub
 
 # Copy requirements.txt
-COPY requirements.txt .
+COPY requirements_gpu.txt .
 
 # Upgrade pip and install dependencies
-RUN python -m pip install --upgrade pip \
-    && pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --progress-bar off -r requirements.txt \
-    && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+RUN python -m pip install --upgrade pip && \
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --progress-bar off -r requirements_gpu.txt
 
 # Copy project files
 COPY . .
@@ -40,4 +39,4 @@ COPY . .
 EXPOSE 5000
 
 # Start the service
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "8"]

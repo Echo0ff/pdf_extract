@@ -2,7 +2,9 @@ version: '3.8'  # Updated to a more recent version
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
     ports:
       - "${PORT}:${PORT}"
     volumes:
@@ -19,10 +21,11 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 4  # Use 4 GPUs
+              count: 1
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=4,5,6,7  # Use the last 4 GPUs
+      - NVIDIA_VISIBLE_DEVICES=all
+      - TORCH_DEVICE=cuda
 
   minio:
     image: minio/minio
@@ -38,7 +41,7 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "8091:80"
+      - "8092:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
