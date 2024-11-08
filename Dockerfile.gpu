@@ -29,8 +29,8 @@ RUN mkdir -p /root/.cache/huggingface/hub
 COPY requirements_gpu.txt .
 
 # Upgrade pip and install dependencies
-RUN python -m pip install --upgrade pip \
-    && pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --progress-bar off -r requirements_gpu.txt \
+RUN python -m pip install --upgrade pip && \
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir --progress-bar off -r requirements_gpu.txt
 
 # Copy project files
 COPY . .
