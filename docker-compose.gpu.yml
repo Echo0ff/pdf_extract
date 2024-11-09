@@ -21,11 +21,12 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: 2
               capabilities: [gpu]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_VISIBLE_DEVICES=0,1
       - TORCH_DEVICE=cuda
+      - CUDA_VISIBLE_DEVICES=0,1
 
   minio:
     image: minio/minio
